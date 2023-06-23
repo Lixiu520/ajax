@@ -1,0 +1,22 @@
+<fieldset><legend>Ajouter un fichier</legend>
+
+                <asp:FileUpLoad ID="upLoadFichier"  runat="server" Multiple ="true" OnLoad="UpLoad" accept=".pdf,  .jpg, .jpeg,.png" />
+                 <br />
+                <asp:Image ImageUrl="/./App_Themes/Img/piece-jointe.png" alt="PieceJointe" ID="pieceJointe" Visible="false" runat="server"/>
+                <asp:Literal ID="nomDufichier" runat="server" Visible="false" />
+                <br />
+                <asp:LinkButton OnClick ="UpLoadFile" runat="server" Text="Envoyer" />
+
+            </fieldset>
+
+  protected void UpLoadFile(object sender, EventArgs e)
+        {
+            if (upLoadFichier.HasFile)
+            {
+                string fileName = upLoadFichier.FileName;
+                upLoadFichier.SaveAs(Server.MapPath("/./BDD/PieceJointes/" +fileName));
+                this.nomDufichier.Text = fileName;
+                this.pieceJointe.Visible = true;
+                this.nomDufichier.Visible = true; // Afficher le nom du fichier
+            }
+        }
